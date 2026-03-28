@@ -1,0 +1,157 @@
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.hero {
+  padding: 80px 0 60px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.1;
+  margin-bottom: 20px;
+  color: #111;
+  letter-spacing: -0.03em;
+}
+
+.hero h1 span {
+  color: #666;
+  font-style: italic;
+}
+
+.hero p {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: #555;
+  max-width: 600px;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.searchBar {
+  background: #fff;
+  padding: 8px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 650px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eee;
+}
+
+.inputWrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.searchIcon {
+  color: #999;
+  margin-right: 12px;
+}
+
+.searchBar input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background: transparent;
+}
+
+.searchButton {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 100px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.featured {
+  margin-top: 20px;
+}
+
+.sectionHeader h2 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+}
+
+.controlBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.itemCount {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.sortSelect {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 0.85rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  padding-bottom: 60px;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 80px 0;
+  color: #888;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 50px 0;
+  }
+  
+  .searchBar {
+    border-radius: 20px;
+    padding: 10px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .inputWrapper {
+    padding-left: 10px;
+    width: 100%;
+  }
+
+  .searchButton {
+    width: 100%;
+    padding: 14px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  
+  .controlBar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
