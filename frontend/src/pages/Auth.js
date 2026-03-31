@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import styles from './Auth.module.css';
 import API from '../api';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +11,12 @@ const Auth = () => {
     password: ''
   });
   const navigate = useNavigate();
-
+  useEffect(() => {
+    const user = localStorage.getItem('userInfo');
+    if (user) {
+      navigate('/');
+    }
+  }, [navigate]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const endpoint = isLogin ? '/auth/login' : '/auth/register';

@@ -94,21 +94,28 @@ const Messages = () => {
     };
   }, [currentUser]);
 
-  useEffect(() => {
-    if (!socket.current) return;
+ useEffect(() => {
+    if (!socket.current || !currentUser) return;
 
     const handleNewMessage = (newMessageReceived) => {
-      if (!activeChat || activeChat._id !== newMessageReceived.conversationId) {
-        fetchConversations(); 
-      } else {
-        setMessages((prev) => [...prev, newMessageReceived]);
-        fetchConversations();
+      if (newMessageReceived.sender._id === currentUser._id) return;
+
+      if (activeChat && activeChat._id === newMessageReceived.conversationId) {
+        setMessages((prev) => {
+          if (prev.find(m => m._id === newMessageReceived._id)) return prev;
+          return [...prev, newMessageReceived];
+        });
       }
+      
+      fetchConversations();
     };
 
     socket.current.on("message received", handleNewMessage);
-    return () => socket.current.off("message received", handleNewMessage);
-  }, [activeChat, fetchConversations]);
+    
+    return () => {
+      socket.current.off("message received", handleNewMessage);
+    };
+  }, [activeChat?._id, fetchConversations, currentUser?._id]);
 
   useEffect(() => {
     if (!currentUser) {

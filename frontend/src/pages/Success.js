@@ -1,18 +1,37 @@
-import React, { useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import React, { useEffect ,useRef} from 'react';
+import { useNavigate, useSearchParams,useLocation } from 'react-router-dom';
 import { CheckCircle, MessageSquare, Home } from 'lucide-react';
 import styles from './Success.module.css';
+import API from '../api';
 
 const Success = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const location = useLocation();
   const sessionId = searchParams.get('session_id');
+  const hasConfirmed = useRef(false);
 
   useEffect(() => {
     if (!sessionId) {
       navigate('/');
     }
   }, [sessionId, navigate]);
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('userInfo'));
+    const sessionId = new URLSearchParams(location.search).get('session_id');
+
+    if (sessionId && user && !hasConfirmed.current) {
+      hasConfirmed.current = true;
+      API.post('/payment/confirm', { sessionId }, {
+        headers: { Authorization: `Bearer ${user.token}` }
+      })
+      .then(() => {
+        console.log("✅ Booking saved to MongoDB");
+        setTimeout(() => navigate('/my-listings'), 3000);
+      })
+      .catch(err => console.error("❌ Confirmation failed:", err));
+    }
+  }, [location, navigate]);
 
   return (
     <div className={styles.container}>

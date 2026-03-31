@@ -11,5 +11,6 @@ router.post(
 );
 
 router.post('/create-checkout-session', protect, paymentController.createCheckoutSession);
+router.post('/confirm', protect, paymentController.confirmPayment);
 
 module.exports = router;

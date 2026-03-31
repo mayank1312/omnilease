@@ -1,17 +1,16 @@
+import "react-datepicker/dist/react-datepicker.css"; 
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import API from '../api';
 import { MapPin, User, ChevronLeft, Image as ImageIcon, X, AlertCircle, MessageCircle, CreditCard } from 'lucide-react';
 import styles from './ListingDetails.module.css';
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; 
-import { loadStripe } from '@stripe/stripe-js';
 
 const ListingDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [listing, setListing] = useState(null);
-  const [showGallery, setShowGallery] = useState(false);
+  const [activeImage, setActiveImage] = useState(0);
   const [showRentModal, setShowRentModal] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -82,13 +81,26 @@ const ListingDetails = () => {
 
         <div className={styles.layout}>
           <div className={styles.imageSection}>
-            <div className={styles.imageWrapper}>
-              <img src={listing.images[0]} alt={listing.title} className={styles.mainImage} />
-              {listing.images.length > 1 && (
-                <button className={styles.viewPhotosBtn} onClick={() => setShowGallery(true)}>
-                  <ImageIcon size={16} /> {listing.images.length} photos
-                </button>
-              )}
+            <div className={styles.galleryLayout}>
+              <div className={styles.thumbnailSidebar}>
+                {listing.images.map((img, index) => (
+                  <div 
+                    key={index} 
+                    className={`${styles.thumbWrapper} ${activeImage === index ? styles.activeThumb : ''}`}
+                    onClick={() => setActiveImage(index)}
+                  >
+                    <img src={img} alt={`Thumbnail ${index}`} />
+                  </div>
+                ))}
+              </div>
+
+              <div className={styles.mainImageWrapper}>
+                <img 
+                  src={listing.images[activeImage]} 
+                  alt={listing.title} 
+                  className={styles.mainImage} 
+                />
+              </div>
             </div>
           </div>
 
@@ -134,7 +146,7 @@ const ListingDetails = () => {
                 </div>
               ) : (
                 <div className={styles.btnGroup}>
-                  <button className={styles.enquireBtn} onClick={() => navigate(`/messages?product=${listing._id}`)}>Chat</button>
+                  <button className={styles.enquireBtn} onClick={() => navigate(`/messages?product=${listing._id}`)}>Enquire now</button>
                   <button className={styles.rentBtn} onClick={() => setShowRentModal(true)}>Rent Now</button>
                 </div>
               )}
@@ -142,17 +154,6 @@ const ListingDetails = () => {
           </div>
         </div>
       </div>
-
-      {showGallery && (
-        <div className={styles.galleryModal}>
-          <div className={styles.galleryHeader}>
-            <button className={styles.closeBtn} onClick={() => setShowGallery(false)}><X size={20} /></button>
-          </div>
-          <div className={styles.galleryContent}>
-            {listing.images.map((img, idx) => <img key={idx} src={img} className={styles.galleryImage} alt="" />)}
-          </div>
-        </div>
-      )}
 
       {showRentModal && (
         <div className={styles.modalOverlay} onClick={() => setShowRentModal(false)}>

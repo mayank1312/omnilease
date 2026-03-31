@@ -8,6 +8,7 @@ import EditListing from './pages/EditListing';
 import MyListings from './pages/MyListings';
 import Success from './pages/Success';
 import Messages from './pages/Messages';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/messages" element={<Messages />} />
         <Route path="/success" element={<Success />} />
       </Routes>
+      <Footer/>
     </Router>
   );
 }

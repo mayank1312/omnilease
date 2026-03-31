@@ -77,13 +77,21 @@
 }
 
 .featured {
-  margin-top: 20px;
+  margin-top: 60px;
+  padding-bottom: 80px;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end; /* Aligns title and sort dropdown to the baseline */
+  margin-bottom: 30px;
 }
 
 .sectionHeader h2 {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  margin-bottom: 10px;
-  letter-spacing: -0.02em;
+  font-size: 2.2rem;
+  letter-spacing: -0.03em;
+  margin: 0;
 }
 
 .controlBar {
@@ -111,15 +119,29 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 25px;
-  padding-bottom: 60px;
+  /* Using 1fr ensures cards are equal width, minmax prevents them from getting too small */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+  gap: 32px; /* Increased gap for better breathing room */
+  margin-top: 24px;
 }
 
 .emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 20px;
   text-align: center;
-  padding: 80px 0;
+  background: #f9f9fb;
+  border-radius: 24px;
+  border: 1px dashed #e0e0e5;
+  margin-top: 40px;
+}
+
+.emptyState p {
   color: #888;
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {
@@ -144,8 +166,8 @@
     padding: 14px;
   }
 
-  .grid {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+ .grid {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)); /* Single column on mobile */
     gap: 20px;
   }
   
@@ -153,5 +175,10 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+  }
+  .sectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
   }
 }
